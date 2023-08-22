@@ -1,9 +1,3 @@
-//
-//  ContentView.swift
-//  HabitTracker
-//
-//  Created by Michael Welker on 2023-08-21.
-//
 
 import SwiftUI
 
