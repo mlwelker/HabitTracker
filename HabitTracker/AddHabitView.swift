@@ -2,8 +2,10 @@
 import SwiftUI
 
 struct AddHabitView: View {
+    @ObservedObject var trackedHabits: TrackedHabits
+    
     @State private var habitDescription = ""
-    @State private var habitImage = ""
+    @State private var habitImage = "checkmark.circle"
     
     @Environment(\.dismiss) var dismiss
     
@@ -26,16 +28,11 @@ struct AddHabitView: View {
                         Image(systemName: $0)
                     }
                 }
-//                .pickerStyle(.menu)
-//                .pickerStyle(.inline)
-//                .pickerStyle(.navigationLink)
                 .pickerStyle(.segmented)
-//                .pickerStyle(.wheel)
                 
                 Button {
-                    // TODO
-                    // create new habit item
-                    // append to habit list
+                    let habit = Habit(description: habitDescription, count: 0, image: habitImage)
+                    trackedHabits.habits.append(habit)
                     dismiss()
                 } label: {
                     Text("Save")
@@ -46,9 +43,6 @@ struct AddHabitView: View {
             .navigationTitle("Add new habit")
             .toolbar {
                 Button {
-                    // TODO
-                    // create new habit item
-                    // append to habit list
                     dismiss()
                 } label: {
                     Text("Cancel")
@@ -60,6 +54,6 @@ struct AddHabitView: View {
 
 struct AddHabitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddHabitView()
+        AddHabitView(trackedHabits: TrackedHabits())
     }
 }

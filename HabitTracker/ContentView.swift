@@ -2,27 +2,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var firstCount = 3
-    @State private var secondCount = 3
+    @StateObject var trackedHabits = TrackedHabits()
     
     @State private var showingAddHabit = false
+    @State private var habitCount = 0
     
     var body: some View {
         NavigationView {
             List {
                 Section {
-                    HStack {
-                        Image(systemName: "figure.run.circle")
-                        Text("Exercise: \(firstCount)")
-                        Spacer()
-                        Stepper("", value: $firstCount)
+                    ForEach(trackedHabits.habits) { habit in
+                        HStack {
+                            Image(systemName: habit.image)
+                            Text("\(habit.description): \(habit.count)")
+                            Spacer()
+                            Button {
+                                // TODO add functionality to increment count
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                            .buttonStyle(.borderedProminent)
+                        }
                     }
-                    HStack {
-                        Image(systemName: "character.bubble")
-                        Text("Japanese: \(secondCount)")
-                        Spacer()
-                        Stepper("", value: $secondCount)
-                    }
+                    .onDelete(perform: removeHabits)
                 } header: {
                     Text("Tracking")
                 }
@@ -36,9 +38,13 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddHabit) {
-                AddHabitView()
+                AddHabitView(trackedHabits: trackedHabits)
             }
         }
+    }
+    
+    func removeHabits(at offsets: IndexSet) {
+        trackedHabits.habits.remove(atOffsets: offsets)
     }
 }
 
