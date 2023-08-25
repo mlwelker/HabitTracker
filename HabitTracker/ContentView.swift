@@ -12,16 +12,20 @@ struct ContentView: View {
             List {
                 Section {
                     ForEach(trackedHabits.habits) { habit in
-                        HStack {
-                            Image(systemName: habit.image)
-                            Text("\(habit.description): \(habit.count)")
-                            Spacer()
-                            Button {
-                                // TODO add functionality to increment count
-                            } label: {
-                                Image(systemName: "plus")
+                        NavigationLink {
+                            HabitView(habit: habit)
+                        } label: {
+                            HStack {
+                                Image(systemName: habit.image)
+                                Text("\(habit.description): \(habit.count)")
+                                Spacer()
+                                Button {
+                                    // TODO add functionality to increment count
+                                } label: {
+                                    Image(systemName: "plus")
+                                }
+                                .buttonStyle(.borderedProminent)
                             }
-                            .buttonStyle(.borderedProminent)
                         }
                     }
                     .onDelete(perform: removeHabits)
