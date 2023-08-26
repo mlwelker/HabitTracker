@@ -2,7 +2,8 @@
 import Foundation
 
 struct Habit: Identifiable, Codable {
-    var id = UUID()
+    typealias ID = UUID
+    var id: ID
     let description: String
     var count: Int
     var image: String

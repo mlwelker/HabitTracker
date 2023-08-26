@@ -5,11 +5,15 @@ struct AddHabitView: View {
     @ObservedObject var trackedHabits: TrackedHabits
     
     @State private var habitDescription = ""
-    @State private var habitImage = "checkmark.circle"
+    @State private var chosenHabitImage: String?
+    
+    var habitImage: String {
+        chosenHabitImage ?? "checkmark.circle"
+    }
     
     @Environment(\.dismiss) var dismiss
     
-    let imageOptions = [
+    let imageOptions: [String?] = [
         "star",
         "figure.run.circle",
         "character.bubble",
@@ -23,15 +27,17 @@ struct AddHabitView: View {
             Form {
                 TextField("Description", text: $habitDescription)
                 
-                Picker("Image", selection: $habitImage) {
+                Picker("Image", selection: $chosenHabitImage) {
                     ForEach(imageOptions, id: \.self) {
-                        Image(systemName: $0)
+                        if let name = $0 {
+                            Image(systemName: name)
+                        }
                     }
                 }
                 .pickerStyle(.segmented)
                 
                 Button {
-                    let habit = Habit(description: habitDescription, count: 0, image: habitImage)
+                    let habit = Habit(id: UUID(), description: habitDescription, count: 0, image: habitImage)
                     trackedHabits.habits.append(habit)
                     dismiss()
                 } label: {

@@ -18,6 +18,6 @@ struct HabitView: View {
 
 struct HabitView_Previews: PreviewProvider {
     static var previews: some View {
-        HabitView(habit: Habit(description: "Example", count: 2, image: "paperplane"))
+        HabitView(habit: Habit(id: UUID(), description: "Example", count: 2, image: "paperplane"))
     }
 }

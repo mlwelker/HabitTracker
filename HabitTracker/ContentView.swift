@@ -20,7 +20,7 @@ struct ContentView: View {
                                 Text("\(habit.description): \(habit.count)")
                                 Spacer()
                                 Button {
-                                    // TODO add functionality to increment count
+                                    trackedHabits.incrementHabitCount(id: habit.id)
                                 } label: {
                                     Image(systemName: "plus")
                                 }
@@ -41,7 +41,7 @@ struct ContentView: View {
                     Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showingAddHabit) {
+            .fullScreenCover(isPresented: $showingAddHabit) {
                 AddHabitView(trackedHabits: trackedHabits)
             }
         }
